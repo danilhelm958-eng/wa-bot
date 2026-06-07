@@ -1,7 +1,15 @@
 app.get("/test", (req, res) => {
     res.json({ ok: "server aktif" });
 });
+const express = require("express");
+const app = express();
 
+app.get("/", (req, res) => {
+  res.send("OK BOT HIDUP");
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("RUNNING"));
 const express = require("express");
 const app = express();
 
