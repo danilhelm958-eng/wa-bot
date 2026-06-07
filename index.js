@@ -1,32 +1,29 @@
 const express = require("express");
 const app = express();
 
-// 🔥 WAJIB TARUH PALING ATAS
-app.use(express.json());
+// 🔥 WAJIB PALING ATAS
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// TEST ROOT
+// DEBUG MIDDLEWARE (INI PENTING)
+app.use((req, res, next) => {
+    console.log("➡️ REQUEST:", req.method, req.url);
+    next();
+});
+
 app.get("/", (req, res) => {
     res.send("BOT HIDUP ✅");
 });
 
-// TEST SEND (DEBUG TOTAL)
 app.post("/send", (req, res) => {
 
-    console.log("===== REQUEST MASUK =====");
-    console.log("HEADERS:", req.headers);
-    console.log("BODY:", req.body);
+    console.log("🔥 HEADERS:", req.headers);
+    console.log("🔥 BODY:", req.body);
 
-    if (!req.body) {
-        return res.status(400).json({
-            status: "error",
-            message: "body kosong"
-        });
-    }
-
-    res.json({
+    // FORCE RESPONSE BIAR TIDAK 400
+    res.status(200).json({
         status: "ok",
-        received: req.body
+        body: req.body || null
     });
 });
 
