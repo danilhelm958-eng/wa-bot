@@ -1,3 +1,7 @@
+app.get("/test", (req, res) => {
+    res.json({ ok: "server aktif" });
+});
+
 const express = require("express");
 const app = express();
 
