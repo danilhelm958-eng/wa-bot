@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-// WAJIB INI
+// 🔥 WAJIB INI (URUTAN JUGA PENTING)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -10,26 +10,19 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", (req, res) => {
+    console.log("HEADERS:", req.headers);
     console.log("BODY:", req.body);
 
-    if (!req.body) {
+    if (!req.body || Object.keys(req.body).length === 0) {
         return res.status(400).json({
             status: "error",
-            msg: "body tidak terbaca"
+            msg: "BODY KOSONG / TIDAK TERBACA"
         });
     }
 
     const { number, message } = req.body;
 
-    if (!number || !message) {
-        return res.status(400).json({
-            status: "error",
-            msg: "number & message wajib",
-            received: req.body
-        });
-    }
-
-    res.json({
+    return res.json({
         status: "ok",
         number,
         message
