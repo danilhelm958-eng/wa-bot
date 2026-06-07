@@ -8,6 +8,16 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", (req, res) => {
+    console.log("BODY MASUK:", req.body);
+
+    if (!req.body || !req.body.number || !req.body.message) {
+        return res.status(400).json({
+            status: "error",
+            message: "body kosong / tidak valid",
+            received: req.body
+        });
+    }
+
     res.json({
         status: "ok",
         number: req.body.number,
